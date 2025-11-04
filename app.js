@@ -37,11 +37,12 @@ app.post('/fetch', async (req, res) => {
       if ($(el).children().length === 0 || $(el).text().trim() !== '') {
         // Get the HTML content of the element
         let content = $(el).html();
-        
+
         // Only process if it's a text node
         if (content && $(el).children().length === 0) {
-          // Replace Yale with Fale in text content only
-          content = content.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
+          // Replace Yale with Fale and Harvard with Farvard in text content only
+          content = content.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale')
+                           .replace(/Harvard/g, 'Farvard').replace(/harvard/g, 'farvard');
           $(el).html(content);
         }
       }
@@ -53,14 +54,16 @@ app.post('/fetch', async (req, res) => {
     }).each(function() {
       // Replace text content but not in URLs or attributes
       const text = $(this).text();
-      const newText = text.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
+      const newText = text.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale')
+                          .replace(/Harvard/g, 'Farvard').replace(/harvard/g, 'farvard');
       if (text !== newText) {
         $(this).replaceWith(newText);
       }
     });
     
     // Process title separately
-    const title = $('title').text().replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
+    const title = $('title').text().replace(/Yale/g, 'Fale').replace(/yale/g, 'fale')
+                                    .replace(/Harvard/g, 'Farvard').replace(/harvard/g, 'farvard');
     $('title').text(title);
     
     return res.json({ 
